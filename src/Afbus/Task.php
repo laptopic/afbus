@@ -235,7 +235,6 @@ class Task
     public function setService($service): Task
     {
         $this->_service = $service;
-
         return $this;
     }
 
