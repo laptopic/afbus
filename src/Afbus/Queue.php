@@ -81,7 +81,7 @@ class Queue
      *
      * @return \Afbus\Task
      */
-    public function getTask($priority = null): \Afbus\Task
+    public function getTask($priority = null): Task
     {
         return $this->getDrivers()->getTask($priority);
     }
@@ -98,46 +98,6 @@ class Queue
         }
 
         return false;
-    }
-
-    /**
-     * Create queue
-     *
-     * @param array $config:
-     *  persistor: name of the persistor adapter
-     *  options:   array with options for the persistor
-     *
-     * @return \Afbus\Queue
-     * @throws \InvalidArgumentException
-     */
-    static public function factory($config = array()): Queue
-    {
-        if (isset($config['drivers'])) {
-            $driversClass = 'Afbus\\Drivers\\'. ucfirst($config['drivers']);
-            if (class_exists($driversClass)) {
-                $drivers = new $driversClass;
-            } elseif (class_exists($config['drivers'])) {
-                $drivers = new $config['drivers'];
-            }
-
-            if (!isset($persistor) || !is_object($persistor)) {
-                throw new \InvalidArgumentException(sprintf('Drivers "%s" doesn\'t exist', $config['drivers']));
-            } elseif (!($persistor instanceof Drivers\DriversInterface)) {
-                throw new \InvalidArgumentException(sprintf('Drivers "%s" does not implement Drivers\DriversInterface', $config['drivers']));
-            }
-
-            if (isset($config['options'])) {
-                $drivers->setOptions($config['options']);
-            }
-        } else {
-            // Default persistor
-            $drivers = new \Afbus\Drivers\Memory;
-        }
-
-        $queue = new self;
-        $queue->setDrivers($drivers);
-
-        return $queue;
     }
 
     static public function setInstance($instance)

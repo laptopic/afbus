@@ -36,6 +36,15 @@ interface DriversInterface
     public function addTask(\Afbus\Task $task);
 
     /**
+     * Add task to the queue
+     *
+     * @param \Afbus\Task $name
+     *
+     * @return DriversInterface
+     */
+    public function addTasks(\Afbus\Task $task);
+
+    /**
      * Get next task from the queue
      *
      * @param string $service Return only tasks with this service

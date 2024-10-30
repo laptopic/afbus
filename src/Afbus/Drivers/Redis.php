@@ -2,6 +2,8 @@
 
 namespace Afbus\Drivers;
 
+use Afbus\Task;
+
 /**
  * Redis
  *
@@ -56,7 +58,7 @@ class Redis implements DriversInterface
      *
      * @return \Afbus\Drivers\Redis
      */
-    public function addTask(\Afbus\Task $task)
+    public function addTask(Task $task)
     {
         //по идее task один надо оправить в несколько очередей как?
         $queue = $this->_createQueueName($task->getService());
@@ -77,7 +79,7 @@ class Redis implements DriversInterface
      *
      * @return \Afbus\Drivers\Redis
      */
-    public function addTasks(\Afbus\Task $task)
+    public function addTasks(Task $task)
     {
         // Add task to queues
         $data = serialize(serialize($task));

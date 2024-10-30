@@ -119,7 +119,7 @@ class Worker
      * @return Queue
      * @throws \Afbus\Exception
      */
-    public function getQueue(): \Afbus\Queue
+    public function getQueue(): Queue
     {
         if (null === $this->_queue) {
             $this->_queue = Queue::get();
@@ -205,7 +205,7 @@ class Worker
      * @param Task $task
      * @throws \Afbus\Exception
      */
-    protected function _runTask(Task $task): \Afbus\TaskInterface
+    protected function _runTask(Task $task): TaskInterface
     {
         //нам надо индефицировать класс по любому это будет slim4 исходить из этого
         //и если ivoke то запускать class() если нет и есть метод то class->method (можно оставить только invoke)

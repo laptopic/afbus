@@ -73,14 +73,14 @@ class Task
 
     /**
      *
-     * @param string $name
+     * @param string|null $name
      * @param array $data
      * @param string|array $service
-     * @param string $methodName
+     * @param string|null $methodName
      *
      * @param array $data
      */
-    public function __construct($name = null, $data = array(), $service = null, $methodName = null)
+    public function __construct($name = null, array $data = [], $service = null, $methodName = null)
     {
         if (null !== $name) {
             $this->setName($name);
@@ -104,7 +104,7 @@ class Task
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->_name;
     }
@@ -140,7 +140,7 @@ class Task
      *
      * @return string
      */
-    public function getMethodName()
+    public function getMethodName(): string
     {
         if ($this->_methodName === null) {
             $this->_methodName = self::DEFAULT_METHOD_NAME;
