@@ -5,9 +5,9 @@
   "keywords": ["afbus", "job", "task", "worker", "background", "queue", "redis"],
   "homepage": "https://github.com/laptopic/afbus",
   "authors": [
-    {"name": "AAA Bbbb", "email": "aa@mail.ru"}
+    {"name": "Laptopic"}
   ],
-  "license": "LGPL-2.1+",
+  "license": "MIT",
 
   "minimum-stability": "dev",
 
