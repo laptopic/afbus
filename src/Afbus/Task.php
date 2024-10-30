@@ -260,10 +260,7 @@ class Task
     {
         $queue  = Queue::get();
         $task   = new self($name, $data, $service, $methodName);
-        if(is_string($service))
-            $queue->addTask($task);
-        if(is_array($service))
-            $queue->addTasks($task);
+        $queue->addTask($task);
 
         return $task;
     }

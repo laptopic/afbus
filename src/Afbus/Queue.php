@@ -65,18 +65,6 @@ class Queue
 
     /**
      *
-     * @param \Afbus\Task $task
-     *
-     * @return \Afbus\Queue
-     */
-    public function addTasks(Task $task): Queue
-    {
-        $this->getDrivers()->addTasks($task);
-        return $this;
-    }
-
-    /**
-     *
      * @param int $priority
      *
      * @return \Afbus\Task

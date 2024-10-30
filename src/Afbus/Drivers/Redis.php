@@ -60,11 +60,19 @@ class Redis implements DriversInterface
      */
     public function addTask(Task $task)
     {
-        $queue = $this->_createQueueName($task->getService());
-
-        // Add task to queue
         $data = serialize(serialize($task));
-        $this->_getRedis()->rpush($queue, $data);
+        $queues = $task->getService();
+        if(is_array($queues)){
+            foreach($queues as $value){
+                $queue = $this->_createQueueName($value);
+                $this->_getRedis()->rpush($queue, $data);
+            }
+        }
+
+        if(is_string($queues)){
+            $queue = $this->_createQueueName($queues);
+            $this->_getRedis()->rpush($queue, $data);
+        }
 
         return $this;
     }
