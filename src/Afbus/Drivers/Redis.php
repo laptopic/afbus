@@ -60,10 +60,7 @@ class Redis implements DriversInterface
      */
     public function addTask(Task $task)
     {
-        //по идее task один надо оправить в несколько очередей как?
         $queue = $this->_createQueueName($task->getService());
-
-        //надо сделать поддержку нескольких очередей и путь всегда приходит массив
 
         // Add task to queue
         $data = serialize(serialize($task));
@@ -83,7 +80,6 @@ class Redis implements DriversInterface
     {
         // Add task to queues
         $data = serialize(serialize($task));
-        //по идее task один надо оправить в несколько очередей как?
         $queues = $task->getService();
         foreach($queues as $value){
             $queue = $this->_createQueueName($value);
