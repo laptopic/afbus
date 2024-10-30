@@ -224,8 +224,6 @@ class Task
         return $this->_service;
     }
 
-
-
     /**
      *
      * @param string $service
@@ -236,15 +234,6 @@ class Task
     {
         $this->_service = $service;
         return $this;
-    }
-
-    /**
-     *
-     * @return array
-     */
-    public function __sleep()
-    {
-        return array('_name', '_data', '_methodName', '_service');
     }
 
     /**
