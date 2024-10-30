@@ -1,0 +1,25 @@
+{
+  "name": "laptopic/afbus",
+  "type": "library",
+  "description": "Simple queue manager and task processor for PHP",
+  "keywords": ["afbus", "job", "task", "worker", "background", "queue", "redis"],
+  "homepage": "https://github.com/laptopic/afbus",
+  "authors": [
+    {"name": "AAA Bbbb", "email": "aa@mail.ru"}
+  ],
+  "license": "LGPL-2.1+",
+
+  "minimum-stability": "dev",
+
+  "require": {
+    "php": ">=7.0",
+    "slim/psr7": "^1.0",
+    "slim/slim": "^4.5"
+  },
+
+  "autoload": {
+    "psr-0": {
+      "Afbus": "src/"
+    }
+  }
+}
