@@ -18,7 +18,7 @@ class Worker
     /**
      * Run every 5 seconds by default
      */
-    const DEFAULT_INTERVAL = 5;
+    const DEFAULT_INTERVAL = 1;
 
     /**
      * Run every X seconds
@@ -207,6 +207,7 @@ class Worker
      */
     protected function _runTask(Task $task): TaskInterface
     {
+
         //нам надо индефицировать класс по любому это будет slim4 исходить из этого
         //и если ivoke то запускать class() если нет и есть метод то class->method (можно оставить только invoke)
         //получаем имя класса
