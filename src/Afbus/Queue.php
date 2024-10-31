@@ -65,13 +65,13 @@ class Queue
 
     /**
      *
-     * @param int $priority
+     * @param int $service
      *
      * @return \Afbus\Task
      */
-    public function getTask($priority = null): Task
+    public function getTask($service = null): Task
     {
-        return $this->getDrivers()->getTask($priority);
+        return $this->getDrivers()->getTask($service);
     }
 
     /**
