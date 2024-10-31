@@ -97,7 +97,7 @@ class Worker
 
     /**
      *
-     * @param int $priority
+     * @param string $service
      *
      * @return Worker
      *
@@ -105,8 +105,8 @@ class Worker
      */
     public function setService($service): Worker
     {
-        if ($service !== null && !is_int($service)) {
-            throw new \InvalidArgumentException('Priority must be null or an integer');
+        if ($service !== null && !is_string($service)) {
+            throw new \InvalidArgumentException('Priority must be null or an string');
         }
 
         $this->_service = $service;
