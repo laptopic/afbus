@@ -60,7 +60,7 @@ class Redis implements DriversInterface
      */
     public function addTask(Task $task)
     {
-        $data = serialize(serialize($task));
+        $data = serialize($task);
         $queues = (array) $task->getService();
 //        if(is_string($queues)) $queues = (array) $queues;
 
