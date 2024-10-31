@@ -220,6 +220,7 @@ class Worker
         $taskObject     = $this->c->get($taskClassName);
         $taskObject($task->getData());
 
+        return $taskObject;
     }
 
 }
