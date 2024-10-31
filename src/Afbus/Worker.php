@@ -218,7 +218,9 @@ class Worker
 
         //получаем объект класса отметить в settings autoware
         $taskObject     = $this->c->get($taskClassName);
-        $taskObject($task->getData());
+//        $taskObject($task->getData());
+        $taskObject->setData($task->getData());
+        $taskObject->run();
 
         return $taskObject;
     }
