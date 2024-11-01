@@ -1,25 +1,27 @@
 <?php
 
-namespace Task;
-
+namespace Engine\Application\Tasks;
 
 use Afbus\TaskInterface;
+use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
 
-/**
- * SendMail
- *
- * @author laptopic
- */
+
+
 class TestTask implements TaskInterface
 {
+
     protected $_data;
+
+    public function __construct(
+        public LoggerInterface $logger,
+        public ContainerInterface $c
+    ){}
 
     public function run()
     {
-        $fp = fopen(__DIR__ .'/../mail.log', 'a');
-        fwrite($fp, json_encode($this->_data, JSON_PRETTY_PRINT) . PHP_EOL);
-        fclose($fp);
-
+//        $this->logger->error(date('Y-m-d H:i:s', time()) . ': ' . json_encode($this->_data));
+        echo date('Y-m-d H:i:s', time()) . ': ' . json_encode($this->_data) . "\n";
         return true;
     }
 
