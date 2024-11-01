@@ -216,7 +216,7 @@ class Worker
             throw new \InvalidArgumentException(sprintf('Task class "%s" not found', $taskClassName));
         }
 
-        //получаем объект класса отметить в settings autoware
+        //for autoloading put the class in dependencies autowire
         $taskObject     = $this->c->get($taskClassName);
 //        $taskObject($task->getData());
         $taskObject->setData($task->getData());
