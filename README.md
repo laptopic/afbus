@@ -15,8 +15,5 @@
     ...
 			"laptopic\\afbus\\": "Afbus/",
 		},
-		"files": [
-			"src/Support/functions.php"
-		]
 	},
 }
