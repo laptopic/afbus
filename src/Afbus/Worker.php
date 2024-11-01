@@ -25,32 +25,32 @@ class Worker
      *
      * @var int
      */
-    protected $_interval = self::DEFAULT_INTERVAL;
+    protected int $_interval = self::DEFAULT_INTERVAL;
 
     /**
      * Do only tasks with this priority or all if priority is null
      *
-     * @var int
+     * @var string
      */
-    protected $_service;
+    protected ?string $_service;
 
     /**
      *
      * @var Queue
      */
-    protected $_queue;
+    protected Queue $_queue;
 
     /**
      *
      * @var float
      */
-    protected $_startTime;
+    protected float $_startTime;
 
     /**
      *
      * @var ContainerInterface
      */
-    public $c;
+    public ContainerInterface $c;
 
     /**
      *
@@ -90,7 +90,7 @@ class Worker
      *
      * @return string
      */
-    public function getService()
+    public function getService(): string
     {
         return $this->_service;
     }
@@ -103,7 +103,7 @@ class Worker
      *
      * @throws \InvalidArgumentException
      */
-    public function setService($service): Worker
+    public function setService(?string $service): Worker
     {
         if ($service !== null && !is_string($service)) {
             throw new \InvalidArgumentException('Priority must be null or an string');
