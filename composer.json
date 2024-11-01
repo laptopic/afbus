@@ -1,7 +1,7 @@
 {
   "name": "laptopic/afbus",
   "type": "library",
-  "description": "Simple queue manager and task processor for PHP",
+  "description": "Simple of a message bus for php using the Slim framework",
   "keywords": ["afbus", "job", "task", "worker", "background", "queue", "redis"],
   "homepage": "https://github.com/laptopic/afbus",
   "authors": [
