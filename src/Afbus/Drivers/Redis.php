@@ -62,7 +62,6 @@ class Redis implements DriversInterface
     {
         $data = serialize($task);
         $queues = (array) $task->getService();
-//        if(is_string($queues)) $queues = (array) $queues;
 
         foreach($queues as $value){
             $queue = $this->_createQueueName($value);
