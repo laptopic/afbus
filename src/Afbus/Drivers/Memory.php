@@ -81,12 +81,12 @@ class Memory implements DriversInterface
      *
      * @return \Afbus\Task
      */
-    public function getTask($drivers = null)
+    public function getTask(string $service = null)
     {
-        if (null !== $drivers) {
+        if (null !== $service) {
             foreach ($this->_storage as $k => $task) {
                 $task = unserialize($task);
-                if ($task->getDrivers() == $$drivers) {
+                if ($task->getDrivers() == $$service) {
                     unset($this->_storage[$k]);
                     return $task;
                 }

@@ -38,11 +38,11 @@ interface DriversInterface
     /**
      * Get next task from the queue
      *
-     * @param string $service Return only tasks with this service
+     * @param string|null $service Return only tasks with this service
      *
      * @return \Afbus\Task|null
      */
-    public function getTask($service = null);
+    public function getTask(string $service = null);
 
     /**
      * Clear all tasks from queue

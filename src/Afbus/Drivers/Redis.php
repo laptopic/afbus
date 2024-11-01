@@ -33,7 +33,7 @@ class Redis implements DriversInterface
      *
      * @return array
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->_options;
     }
@@ -44,7 +44,7 @@ class Redis implements DriversInterface
      *
      * @return \Afbus\Drivers\Redis
      */
-    public function setOptions(array $options)
+    public function setOptions(array $options): Redis
     {
         $this->_options = $options;
 
@@ -58,7 +58,7 @@ class Redis implements DriversInterface
      *
      * @return \Afbus\Drivers\Redis
      */
-    public function addTask(Task $task)
+    public function addTask(Task $task): Redis
     {
         $data = serialize($task);
         $queues = (array) $task->getService();
@@ -73,11 +73,11 @@ class Redis implements DriversInterface
 
     /**
      *
-     * @param string $service
+     * @param string|null $service
      *
      * @return \Afbus\Task|null
      */
-    public function getTask($service = null)
+    public function getTask(string $service = null)
     {
         if($service === null){
             return null;
@@ -101,7 +101,7 @@ class Redis implements DriversInterface
      *
      * @return boolean
      */
-    public function clear()
+    public function clear(): bool
     {
         return $this->_getRedis()->flushDB();
     }
@@ -113,7 +113,7 @@ class Redis implements DriversInterface
      *
      * @return string
      */
-    protected function _createQueueName($service)
+    protected function _createQueueName($service): string
     {
 
         return 'queue:service_'. $service;
@@ -125,7 +125,7 @@ class Redis implements DriversInterface
      *
      * @throws \RuntimeException
      */
-    protected function _getRedis()
+    protected function _getRedis(): \Redis
     {
         if (null === $this->_redis) {
 
