@@ -207,10 +207,6 @@ class Worker
      */
     protected function _runTask(Task $task): TaskInterface
     {
-
-        //нам надо индефицировать класс по любому это будет slim4 исходить из этого
-        //и если ivoke то запускать class() если нет и есть метод то class->method (можно оставить только invoke)
-        //получаем имя класса
         $taskClassName  = $task->getClassName();
         if (!class_exists($taskClassName)) {
             throw new \InvalidArgumentException(sprintf('Task class "%s" not found', $taskClassName));
