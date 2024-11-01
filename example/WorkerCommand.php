@@ -80,7 +80,7 @@ final class WorkerCommand extends Command
                 if (null !== ($task = $worker->run())) {
                     echo 'Ran task: '. $task->getName() . PHP_EOL;
                 }
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 echo 'Error: '. $e->getMessage() . PHP_EOL;
             }
         }
