@@ -3,8 +3,8 @@ example of how to include a library in composer.json
 {
 	"repositories": [
 		{
-		"type": "git",
-		"url": "https://github.com/laptopic/afbus"
+			"type": "git",
+			"url": "https://github.com/laptopic/afbus"
 		}
 	],
 	"require": {
