@@ -13,7 +13,7 @@ example of how to include a library in composer.json
 	"autoload": {
 		"psr-4": {
 			"laptopic\\afbus\\": "Afbus/"
-	}
+	    }
 	}
 }
 ```
