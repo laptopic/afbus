@@ -95,7 +95,6 @@ class Redis implements DriversInterface
         return unserialize($taskData);
     }
 
-
     /**
      * Clear queue
      *
