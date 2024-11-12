@@ -61,9 +61,9 @@ class Task
 
     /**
      *
-     * @var string
+     * @var string|array
      */
-    protected string $_service = self::SERVICE_DEVICE;
+    protected $_service = self::SERVICE_DEVICE;
 
     /**
      *
@@ -220,7 +220,7 @@ class Task
 
     /**
      *
-     * @param string $service
+     * @param string|array $service
      *
      * @return Task
      */
