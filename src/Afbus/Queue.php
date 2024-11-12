@@ -67,7 +67,7 @@ class Queue
      *
      * @param int $service
      *
-     * @return \Afbus\Task
+     * @return \Afbus\Task|null
      */
     public function getTask($service = null)
     {
