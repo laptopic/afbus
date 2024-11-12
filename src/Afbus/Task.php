@@ -239,7 +239,7 @@ class Task
      *
      * @return Task
      */
-    public static function create($name, $data = array(), $service = null, $methodName = null): Task
+    public static function create($name, $data = [], $service = null, $methodName = null): Task
     {
         $queue  = Queue::get();
         $task   = new self($name, $data, $service, $methodName);

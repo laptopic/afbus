@@ -14,21 +14,21 @@ class Memory implements DriversInterface
      *
      * @var array
      */
-    private $_options = array();
+    private $_options = [];
 
     /**
      * Array for storage
      *
      * @var array
      */
-    private $_storage = array();
+    private $_storage = [];
 
     /**
      * Array for unique tasks
      *
      * @var array
      */
-    private $_uniqueTasks = array();
+    private $_uniqueTasks = [];
 
     /**
      *
