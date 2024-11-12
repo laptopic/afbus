@@ -2,7 +2,6 @@
 
 namespace Engine\Console;
 
-
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -41,12 +40,12 @@ final class PublishCommand extends Command
     {
         Task::create(
             'Engine\Application\Tasks\TestTask',
-            array(
+            [
                 'to'        => 'someone@somewhere.com',
                 'from'      => 'qutee@nowhere.tld',
                 'subject'   => 'Hi!',
                 'text'      => 'It\'s your faithful QuTee!'
-            ),
+            ],
             Task::SERVICE_DEVICE
         );
 
