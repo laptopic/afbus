@@ -16,13 +16,13 @@ class Queue
      *
      * @var \Afbus\Drivers\DriversInterface
      */
-    protected $_drivers;
+    protected Drivers\DriversInterface $_drivers;
 
     /**
      *
      * @var \Afbus\Queue
      */
-    static protected $_instance;
+    static protected Queue $_instance;
 
     public function __construct()
     {
@@ -33,7 +33,7 @@ class Queue
      *
      * @return \Afbus\Drivers\DriversInterface
      */
-    public function getDrivers()
+    public function getDrivers(): Drivers\DriversInterface
     {
         return $this->_drivers;
     }
@@ -44,7 +44,7 @@ class Queue
      *
      * @return \Afbus\Queue
      */
-    public function setDrivers(\Afbus\Drivers\DriversInterface $drivers)
+    public function setDrivers(\Afbus\Drivers\DriversInterface $drivers): Queue
     {
         $this->_drivers = $drivers;
 

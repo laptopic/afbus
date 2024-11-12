@@ -45,31 +45,25 @@ class Task
      *
      * @var string
      */
-    protected $_name;
+    protected string $_name;
 
     /**
      *
      * @var string
      */
-    protected $_methodName;
+    protected string $_methodName;
 
     /**
      *
      * @var array
      */
-    protected $_data;
+    protected array $_data;
 
     /**
      *
      * @var string
      */
-    protected $_service = self::SERVICE_DEVICE;
-
-    /**
-     *
-     * @var string
-     */
-    protected $_uniqueId;
+    protected string $_service = self::SERVICE_DEVICE;
 
     /**
      *
@@ -115,7 +109,7 @@ class Task
      *
      * @return Task
      */
-    public function setName($name): Task
+    public function setName(string $name): Task
     {
         // Name can hold method name in it
         if (strpos($name, '::')) {
@@ -156,7 +150,7 @@ class Task
      *
      * @throws \InvalidArgumentException
      */
-    public function setMethodName($methodName): Task
+    public function setMethodName(string $methodName): Task
     {
         // validate name
         if (!preg_match('/^[a-z][a-zA-Z0-9_]+$/', $methodName)) {

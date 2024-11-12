@@ -147,7 +147,7 @@ class Worker
      * @return Task|null Task which ran, or null if no task found
      * @throws \Exception
      */
-    public function run()
+    public function run(): ?\Afbus\Task
     {
         // Start timing
         $this->_startTime();
