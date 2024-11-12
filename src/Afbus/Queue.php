@@ -69,7 +69,7 @@ class Queue
      *
      * @return \Afbus\Task
      */
-    public function getTask($service = null): Task
+    public function getTask($service = null)
     {
         return $this->getDrivers()->getTask($service);
     }
