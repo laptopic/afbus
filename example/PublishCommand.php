@@ -25,9 +25,6 @@ final class PublishCommand extends Command
         parent::__construct();
     }
 
-
-
-
     /**
      * Configure.
      *

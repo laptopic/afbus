@@ -50,7 +50,6 @@ final class WorkerCommand extends Command
         pcntl_signal(SIGINT, [$this, 'doInterrupt']);
         pcntl_signal(SIGTERM, [$this, 'doTerminate']);
 
-
         //each can have its own default
         $this->worker->setService(Task::SERVICE_DEVICE);
 
