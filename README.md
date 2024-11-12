@@ -45,6 +45,8 @@ Afbus\Worker::class => function (ContainerInterface $c): Afbus\Worker {
     return $worker;
 },
 
+...
+
 Engine\Application\Tasks\TestTask::class => \DI\autowire(Engine\Application\Tasks\TestTask::class),
 ```
 
