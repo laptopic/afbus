@@ -2,10 +2,7 @@
 
 namespace Afbus;
 
-use Afbus\Exception;
-use Afbus\Queue;
-use Afbus\Task;
-use Afbus\TaskInterface;
+
 use Psr\Container\ContainerInterface;
 
 /**
@@ -213,7 +210,7 @@ class Worker
         }
 
         //for autoloading put the class in dependencies autowire
-        $taskObject     = $this->c->get($taskClassName);
+        $taskObject = $this->c->get($taskClassName);
 //        $taskObject($task->getData());
         $taskObject->setData($task->getData());
         $taskObject->run();
