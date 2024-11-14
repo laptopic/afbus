@@ -61,7 +61,7 @@ class Beanstalk implements DriversInterface
     {
         // Add task to queue
         $data = serialize($task);
-        $this->_getClient()->putInTube(self::TUBE_NAME, $data, $this->_convertPriority($task->getService()));
+        $this->_getClient()->putInTube(self::TUBE_NAME, $data);
 
         return $this;
     }
@@ -143,34 +143,5 @@ class Beanstalk implements DriversInterface
         return $this->_client;
     }
 
-    /**
-     * QuTee - Higher the number, higher the priority;
-     * Beanstalkd - Lower the number, higher the priority
-     *
-     * @param int $priority
-     *
-     * @return int
-     */
-    protected function _convertPriority($priority)
-    {
-        if (!is_numeric($priority)) {
-            throw new \Exeption('Error while converting priority, agrument is '
-                . 'not a number, '. gettype($priority) .' sent');
-        }
 
-        switch ($priority) {
-            case Task::PRIORITY_LOW:
-                // Least urgent Beanstalkd priority
-                return 4294967295;
-
-            case Task::PRIORITY_NORMAL:
-                return PheanstalkInterface::DEFAULT_PRIORITY;
-
-            case Task::PRIORITY_HIGH:
-                return 1024;
-
-            default:
-                return 512;
-        }
-    }
 }
