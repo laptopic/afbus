@@ -60,10 +60,11 @@ class Redis implements DriversInterface
      */
     public function addTask(Task $task): Redis
     {
-        $data = serialize($task);
         $queues = (array) $task->getService();
 
         foreach($queues as $value){
+            $task->setService($value);
+            $data = serialize($task);
             $queue = $this->_createQueueName($value);
             $this->_getRedis()->rpush($queue, $data);
         }
@@ -92,7 +93,7 @@ class Redis implements DriversInterface
 
         list(, $taskData) = $data;
         $task = unserialize($taskData);
-        if (null !== $service && !in_array($service, (array) $task->getService())) {
+        if (null !== $service && $task->getService() !== $service) {
             //throw?
             return null;
         }

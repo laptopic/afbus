@@ -61,7 +61,7 @@ class Beanstalk implements DriversInterface
     {
         // Add task to queue
         $data = serialize($task);
-        $this->_getClient()->putInTube(self::TUBE_NAME, $data, $this->_convertPriority($task->getPriority()));
+        $this->_getClient()->putInTube(self::TUBE_NAME, $data, $this->_convertPriority($task->getService()));
 
         return $this;
     }
@@ -87,7 +87,7 @@ class Beanstalk implements DriversInterface
 
         $task = unserialize($data->getData());
 
-        if (null !== $service && !in_array($service, (array) $task->getService())) {
+        if (null !== $service && $task->getService() !== $service) {
             $this->_getClient()->release($data);
 
             return null;
