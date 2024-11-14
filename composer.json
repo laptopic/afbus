@@ -16,7 +16,8 @@
     "slim/psr7": "^1.0",
     "slim/slim": "^4.5",
     "ext-pcntl": "*",
-    "pda/pheanstalk": "3.x-dev"
+    "ext-rdkafka": "^4.0|^5.0|^6.0"
+
   },
 
   "autoload": {
