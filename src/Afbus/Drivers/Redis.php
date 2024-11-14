@@ -83,16 +83,21 @@ class Redis implements DriversInterface
             return null;
         }
 
-        $queues = (array) $this->_createQueueName($service);
+        $queue = $this->_createQueueName($service);
 
-        $data   = $this->_getRedis()->blpop($queues, 10);
+        $data   = $this->_getRedis()->blpop($queue, 10);
         if (empty($data)) {
             return null;
         }
 
         list(, $taskData) = $data;
+        $task = unserialize($taskData);
+        if (null !== $service && !in_array($service, (array) $task->getService())) {
+            //throw?
+            return null;
+        }
 
-        return unserialize($taskData);
+        return $task;
     }
 
     /**

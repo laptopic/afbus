@@ -15,8 +15,8 @@
     "php": ">=7.4",
     "slim/psr7": "^1.0",
     "slim/slim": "^4.5",
-    "ext-redis": "*",
-    "ext-pcntl": "*"
+    "ext-pcntl": "*",
+    "pda/pheanstalk": "3.x-dev"
   },
 
   "autoload": {
