@@ -59,9 +59,13 @@ class Beanstalk implements DriversInterface
      */
     public function addTask(Task $task): Beanstalk
     {
-        // Add task to queue
-        $data = serialize($task);
-        $this->_getClient()->putInTube(self::TUBE_NAME, $data);
+        $queues = (array) $task->getService();
+        foreach($queues as $value){
+            $task->setService($value);
+            $data = serialize($task);
+            $queue = $this->_createQueueName($value);
+            $this->_getClient()->putInTube($queue, $data);
+        }
 
         return $this;
     }
