@@ -138,6 +138,10 @@ class Worker
         return $this;
     }
 
+    public function sub() {
+        $this->getQueue()->getTask($this->getService());
+    }
+
     /**
      * Run the worker, get tasks of the queue, run them
      *
