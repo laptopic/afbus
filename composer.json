@@ -16,8 +16,7 @@
     "ext-redis": "*",
     "slim/psr7": "^1.0",
     "slim/slim": "^4.5",
-    "php-amqplib/php-amqplib": "^3.7",
-
+    "php-amqplib/php-amqplib": "^3.7"
   },
 
   "autoload": {
