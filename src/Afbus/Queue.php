@@ -65,13 +65,13 @@ class Queue
 
     /**
      *
-     * @param int $service
-     *
+     * @param string $service
+     * @param callable|null $service
      * @return \Afbus\Task|null
      */
-    public function getTask($service = null)
-    {
-        return $this->getDrivers()->getTask($service);
+
+    public function getTask($service, $callback = null){
+        return $this->getDrivers()->getTask($service, $callback);
     }
 
     /**

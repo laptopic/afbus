@@ -53,15 +53,25 @@ final class WorkerCommand extends Command
         //each can have its own default
         $this->worker->setService(Task::SERVICE_DEVICE);
 
-        while (true) {
-            try {
-                if (null !== ($task = $this->worker->run())) {
-                    echo 'Ran task: '. $task->getName() . PHP_EOL;
-                }
-            } catch (Exception $e) {
-                echo 'Error: '. $e->getMessage() . PHP_EOL;
-            }
+        //consumer
+        try {
+            $this->worker->run(true);
+        } catch (Exception $e) {
+            echo 'Error: '. $e->getMessage() . PHP_EOL;
         }
+
+        return 0;
+
+        //Queue
+//        while (true) {
+//            try {
+//                if (null !== ($task = $this->worker->run())) {
+//                    echo 'Ran task: '. $task->getName() . PHP_EOL;
+//                }
+//            } catch (Exception $e) {
+//                echo 'Error: '. $e->getMessage() . PHP_EOL;
+//            }
+//        }
 
     }
 }

@@ -3,11 +3,11 @@
 namespace Afbus\Drivers;
 
 use Afbus\Task;
+use RuntimeException;
 use PhpAmqpLib\Connection\AMQPConnectionConfig;
 use PhpAmqpLib\Connection\AMQPConnectionFactory;
 use PhpAmqpLib\Message\AMQPMessage;
 use Psr\Container\ContainerInterface;
-use RuntimeException;
 use Throwable;
 use Psr\Log\LoggerInterface;
 /**
@@ -17,7 +17,6 @@ use Psr\Log\LoggerInterface;
  */
 class Rabbit implements DriversInterface
 {
-
     private $_options = array();
     private $_channel;
 
@@ -28,21 +27,12 @@ class Rabbit implements DriversInterface
 
     }
 
-    /**
-     *
-     * @return array
-     */
     public function getOptions(): array
     {
         return $this->_options;
     }
 
-    /**
-     *
-     * @param array $options
-     *
-     * @return \Afbus\Drivers\Rabbit
-     */
+
     public function setOptions(array $options): Rabbit
     {
         $this->_options = $options;
@@ -50,13 +40,6 @@ class Rabbit implements DriversInterface
         return $this;
     }
 
-    /**
-     * Add task to queue
-     *
-     * @param \Afbus\Task $task
-     *
-     * @return \Afbus\Drivers\Redis
-     */
     public function addTask(Task $task): Rabbit
     {
         $queues = (array) $task->getService();
@@ -70,54 +53,9 @@ class Rabbit implements DriversInterface
         return $this;
     }
 
-    /**
-     *
-     * @param string|null $service
-     *
-     * @return \Afbus\Task|null
-     */
-    public function getTask(string $service = null)
-    {
-        if($service === null){
-            return null;
-        }
-
-        $queue = $this->_createQueueName($service);
-        $this->declareQueue($queue);
-        $message = $this->_getRabbit()->basic_get($queue);
-        if (empty($message)) {
-            return null;
-        }
-
-        $task = unserialize($message->getBody());
-
-        if (null !== $service && $task->getService() !== $service) {
-            return null;
-        }
-        $message->ack();
-//        $this->_getRabbit()->basic_ack($message->getDeliveryTag());
-        return $task;
-    }
-
-    /**
-     * Clear queue
-     *
-     * @return boolean
-     */
-    public function clear(): bool
-    {
-        return true;
-    }
-
-    /**
-     * Create queue name, which is in fact a service filter
-     *
-     * @param string $service
-     *
-     * @return string
-     */
     protected function _createQueueName($service): string
     {
+
         return 'queue:service_'. $service;
     }
 
@@ -147,7 +85,8 @@ class Rabbit implements DriversInterface
                 exclusive: false,
                 auto_delete: false,
                 nowait: false,
-                arguments: []
+                arguments: [],
+                ticket: null,
             );
         } catch (\Throwable $exception) {
             $this->logger->critical(sprintf('[%s] Failed to declare queue.', __METHOD__), [
@@ -186,17 +125,72 @@ class Rabbit implements DriversInterface
                 $amqpConfig->setSslKey($tlsKey);
                 $amqpConfig->setSslPassPhrase($tlsPhrase);
                 $amqpConfig->setVhost($vhost);
+
+
                 $rabbit = AMQPConnectionFactory::create($amqpConfig);
                 $this->_channel = $rabbit->channel();
-            } catch (\Throwable $ex) {
-                $this->logger->critical(sprintf('[%s] Failed to connect to RabbitMQ', __METHOD__), [
-                    'ex' => (string) $ex
-                ]);
+            } catch (\Throwable $e) {
+//            throw new \Exception("Unable to connect to Rabbit server");
                 throw new RuntimeException('Failed to connect to RabbitMQ.');
             }
         }
 
         return $this->_channel;
     }
+
+    public function clear(): bool
+    {
+        return true;
+    }
+
+    public function getTask(string $service = null, callable|null $callback)
+    {
+        $queue = $this->_createQueueName($service);
+        $this->declareQueue($queue);
+
+        $libCallback = function (AMQPMessage $message) use ($callback){
+            $receivedMessage = unserialize($message->getBody());
+            if (isset($callback) && false === call_user_func($callback, $receivedMessage)) {
+                return false;
+            }
+            $message->ack();
+            return $receivedMessage;
+        };
+//        var_dump($callback); die();
+        if(empty($callback)){
+            $message = $this->_getRabbit()->basic_get($queue);
+            if (empty($message)) {
+                return null;
+            }
+            $task = $libCallback($message);
+            return $task;
+        }
+
+        try {
+            $this->_getRabbit()->basic_consume(
+                $queue,
+                consumer_tag: 'consumer_' . getmypid(),
+                no_local: false,
+                no_ack: false,
+                exclusive: false,
+                nowait: false,
+                callback: $libCallback,
+            );
+
+            $this->_getRabbit()->consume();
+            while ($this->_getRabbit()->is_consuming()) {
+                $this->_getRabbit()->wait();
+            }
+        } catch (Throwable $exception) {
+            $this->logger->error(sprintf('[%s] Failed to consume message1.', __METHOD__), [
+                'ex' => (string) $exception,
+                'queue' => $queue,
+            ]);
+        }
+
+
+    }
+
+
 
 }

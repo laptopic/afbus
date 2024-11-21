@@ -78,7 +78,7 @@ class Redis implements DriversInterface
      *
      * @return \Afbus\Task|null
      */
-    public function getTask(string $service = null)
+    public function getTask(string $service = null, callable|null $callback = null)
     {
         if($service === null){
             return null;

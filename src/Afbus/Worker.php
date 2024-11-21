@@ -3,6 +3,7 @@
 namespace Afbus;
 
 
+use PhpAmqpLib\Message\AMQPMessage;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -148,23 +149,32 @@ class Worker
      * @return Task|null Task which ran, or null if no task found
      * @throws \Exception
      */
-    public function run(): ?\Afbus\Task
+    public function run(bool $async = false): ?Task
     {
-        // Start timing
-        $this->_startTime();
+        $callback = function ($task){
+            $taskClassName  = $task->getClassName();
+            if (!class_exists($taskClassName)) {
+                throw new \InvalidArgumentException(sprintf('Task class "%s" not found', $taskClassName));
+            }
+            $taskObject = $this->c->get($taskClassName);
+            $taskObject->setData($task->getData());
+            $taskObject->run();
+            return $taskObject;
+        };
 
-        // Get next task with set priority (or any task if priority not set)
-        if (null === ($task = $this->getQueue()->getTask($this->getService()))) {
+        if(!$async){
+            $this->_startTime();
+            if (null === ($task = $this->getQueue()->getTask($this->getService()))) {
+                $this->_sleep();
+                return null;
+            }
+
+            $callback($task);
             $this->_sleep();
-            return null;
-        }
+            return $task;
+        } else
+            $this->getQueue()->getTask($this->getService(), $callback);
 
-        $this->_runTask($task);
-
-        // After working, sleep
-        $this->_sleep();
-
-        return $task;
     }
 
     /**
@@ -197,29 +207,6 @@ class Worker
             $remainder = ($this->_interval) - $this->_getPassedTime();
             usleep($remainder * 1000000);
         } // Task took more than the interval, don't sleep
-    }
-
-    /**
-     * Get class of the task, run it's default method or method specified in
-     * task data [method]
-     *
-     * @param Task $task
-     * @throws \Afbus\Exception
-     */
-    protected function _runTask(Task $task): TaskInterface
-    {
-        $taskClassName  = $task->getClassName();
-        if (!class_exists($taskClassName)) {
-            throw new \InvalidArgumentException(sprintf('Task class "%s" not found', $taskClassName));
-        }
-
-        //for autoloading put the class in dependencies autowire
-        $taskObject = $this->c->get($taskClassName);
-//        $taskObject($task->getData());
-        $taskObject->setData($task->getData());
-        $taskObject->run();
-
-        return $taskObject;
     }
 
 }
